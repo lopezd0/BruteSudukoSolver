@@ -3,6 +3,10 @@ package Brute_Force1;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * This class will attempt to solve the suduko puzzle. 
+ * 
+ */
 public class Solver
 {
 	private int[][] puzzle;
@@ -10,6 +14,12 @@ public class Solver
 	private int height;
 	private int size;
 
+	/**
+	 * 	The constructor for the solver class. Accepts a string parameter to build the puzzle array from by parsing through a text file,
+	 * 
+	 * @param puzzleName
+	 * @throws Exception
+	 */
 	public Solver(String puzzleName) throws Exception
 	{
 		BufferedReader reader = new BufferedReader(new FileReader(puzzleName));
@@ -50,7 +60,10 @@ public class Solver
 
 
 
-
+/*
+ * 	The broken solver method.
+ * 
+ */
 	public void solve()
 	{
 		int one = 0;
@@ -68,6 +81,12 @@ public class Solver
 		}	
 	}
 
+	/**
+	 *  Doesn't work - unable to backtrack to fix mistakes.
+	 * 
+	 * @param x
+	 * @param y
+	 */
 	private void solveHelper(int x, int y)
 	{
 		if(puzzle[x][y] != 0)
@@ -108,6 +127,14 @@ public class Solver
 
 
 
+	/**
+	 * 	Accepts a value and a column space. Will return a boolean depending on whether or not the given value can be placed 
+	 * 	in the specified column without violating the rules of the suduko game.
+	 * 
+	 * @param column
+	 * @param value
+	 * @return
+	 */
 	private boolean columnCheckNumber(int column, int value)
 	{
 		for(int row = 0; row < size; row++)
@@ -121,6 +148,14 @@ public class Solver
 		return true;
 	}
 
+	/**
+	 * 	Accepts a value and a row space. Will return a boolean depending on whether or not the given value can be placed 
+	 * 	in the specified row without violating the rules of the suduko game.
+	 * 
+	 * @param row
+	 * @param value
+	 * @return
+	 */
 	private boolean rowCheckNumber(int row, int value)
 	{
 		for(int column = 0; column < size; column++)
@@ -134,6 +169,15 @@ public class Solver
 		return true;
 	}
 
+	/**
+	 * 	Accepts a value and a sub-box space. Will return a boolean depending on whether or not the given value can be placed 
+	 * 	in the specified sub-box without violating the rules of the suduko game.
+	 * 
+	 * @param currentRow
+	 * @param currentColumn
+	 * @param value
+	 * @return
+	 */
 	private boolean boxCheckNumber(int currentRow, int currentColumn, int value)
 	{
 		int xLim = (width - 1);
@@ -162,6 +206,10 @@ public class Solver
 		return true ;
 	}
 
+	/*
+	 * 	Dummy method that prints the array to the console and splits it into easily identifiable sub-boxes.
+	 * 
+	 */
 	public void displaySplitPuzzle()
 	{
 		for(int currentHeight = 0; currentHeight < size; currentHeight++)
@@ -183,6 +231,10 @@ public class Solver
 		}
 	}
 
+	/**
+	 * Dummy method that prints the puzzle array to the console.
+	 * 
+	 */
 	public void displayPuzzle()
 	{
 		for(int currentHeight = 0; currentHeight < size; currentHeight++)
