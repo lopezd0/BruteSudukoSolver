@@ -1,0 +1,198 @@
+package Brute_Force1;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+
+public class Solver
+{
+	private int[][] puzzle;
+	private int width;
+	private int height;
+	private int size;
+
+	public Solver(String puzzleName) throws Exception
+	{
+		BufferedReader reader = new BufferedReader(new FileReader(puzzleName));
+
+		String temp = reader.readLine();
+		if(temp.charAt(0) == 'c')
+		{
+			temp = reader.readLine();	
+		}
+
+		width = Integer.parseInt(temp);
+		temp = reader.readLine();
+		height = Integer.parseInt(temp);
+		temp = reader.readLine();
+		size = (height * width);
+
+		puzzle = new int[size][size];
+
+		int currentHeight = 0;
+
+		while(temp != null)
+		{	
+			String[] input = temp.split(" ");
+
+			for(int currentWidth = 0; currentWidth < input.length; currentWidth++)
+			{						
+				puzzle[currentWidth][currentHeight]  = Integer.parseInt(input[currentWidth]);
+			}
+			temp = reader.readLine();
+			currentHeight++;
+		}
+
+		reader.close();
+	}
+
+
+
+
+
+
+
+	public void solve()
+	{
+		int one = 0;
+
+		while(one < size)
+		{
+			int two = 0;
+
+			while(two < size)
+			{
+				solveHelper(one, two);
+				two++;
+			}
+			one++;
+		}	
+	}
+
+	private void solveHelper(int x, int y)
+	{
+		if(puzzle[x][y] != 0)
+		{
+			if(x < (size - 1))
+			{
+				solveHelper((x + 1), y);
+			}
+			else if(y < (size - 1))
+			{
+				solveHelper(0, (y + 1));
+			}
+		}
+		else
+		{
+			for(int i = 1; i <= size; i++)
+			{
+				if(columnCheckNumber(y, i) && rowCheckNumber(x, i) && boxCheckNumber(x, y, i))
+				{
+					puzzle[x][y] = i;
+					i = size;
+				}
+			}
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	private boolean columnCheckNumber(int column, int value)
+	{
+		for(int row = 0; row < size; row++)
+		{
+			if(puzzle[row][column] == value)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean rowCheckNumber(int row, int value)
+	{
+		for(int column = 0; column < size; column++)
+		{
+			if(puzzle[row][column] == value)
+			{
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private boolean boxCheckNumber(int currentRow, int currentColumn, int value)
+	{
+		int xLim = (width - 1);
+		while(currentRow > xLim)
+		{
+			xLim += width;
+		}
+
+		int yLim = (height - 1);
+		while(currentColumn > yLim)
+		{
+			yLim += height;
+		}
+
+		for(int r = 0; r < width; r++)
+		{
+			for(int c = 0; c < height; c++)
+			{
+				if(puzzle[xLim - r][yLim - c] == value)
+				{
+					return false ;
+				}
+			}
+		}
+
+		return true ;
+	}
+
+	public void displaySplitPuzzle()
+	{
+		for(int currentHeight = 0; currentHeight < size; currentHeight++)
+		{
+			for(int currentWidth = 0; currentWidth < size; currentWidth++)
+			{
+				System.out.print(puzzle[currentWidth][currentHeight]);
+				System.out.print("   ");
+				if((currentWidth + 1) % width == 0)
+				{
+					System.out.print("   ");
+				}
+			}
+			System.out.println();
+			if((currentHeight + 1) % height == 0)
+			{
+				System.out.println();
+			}
+		}
+	}
+
+	public void displayPuzzle()
+	{
+		for(int currentHeight = 0; currentHeight < size; currentHeight++)
+		{
+			for(int currentWidth = 0; currentWidth < size; currentWidth++)
+			{
+				System.out.print(puzzle[currentWidth][currentHeight]);
+				System.out.print("   ");
+			}
+			System.out.println();
+		}
+	}
+}
