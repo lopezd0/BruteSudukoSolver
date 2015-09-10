@@ -1,0 +1,26 @@
+package Brute_Force1;
+
+public class Driver
+{
+	private static Solver solver;
+
+	public static void main(String[] args) throws Exception
+	{
+		Solver solver = new Solver("C:\\SCHOOLWORK\\Fall 2015\\Design and Analysis of Algorithms\\Suduko Puzzles\\Sample1.txt");
+		
+		solver.displayPuzzle();
+		solver.solve();
+		System.out.println();
+		solver.displayPuzzle();
+	}
+
+	public static Solver getSolver() 
+	{
+		return solver;
+	}
+
+	public static void setSolver(Solver solver) 
+	{
+		Driver.solver = solver;
+	}
+}
